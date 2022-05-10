@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="de">
+<head> 
+    <meta charset="utf-8">
+    <meta name="What is the best Linux Distribution for me?">
+    <title>Welcome to our Distro-Chooser</title>
+</head>
+
+<body>
+    <header class="base" title="TOP"> 
+        <p>What is the best Linux Distribution for me?</p> 
+    </header>
+    <nav class="base" title="LEFT"><button onclick=onClick(this)>LEFT</button></nav>
+    <aside class="base" title="RIGHT"><button onclick=onClick(this)>RIGHT</button> </aside>
+    <main class="base" title="CENTER"><p>CENTER</p></main>
+    <footer class="base" title="BOTTOM">
+        <button onclick=onClick(this)>© Sabino, Schreckenast</button>
+    </footer>
+    </body>
+
+    <style type="text/css"> 
+
+    /* Dies ist ein css-Kommentar*/
+    body{
+        margin :0;
+    }
+    .base{
+        border: 5% solid black;
+        display: flex;
+        align-items:center;
+        justify-content:center;
+    }
+    header{
+        position:absolute;
+        width:100%;
+        height: 10%;
+    }
+    nav{
+        position:absolute;
+        top:10%;
+        width:20%;
+        height: 80%;
+
+    }
+    main{
+        position:absolute;
+        top:10%;
+        left:20%;
+        width:60%;
+        height:80%;
+
+    }
+    aside{
+        position:absolute;
+        top:10%;
+        width:20%; 
+        left:80%;   
+        height:80%;
+    }
+    footer{
+        position:absolute;
+        width:100%;
+        height:10%;
+        top:90%;
+    }
+    </style>
+
+    <script type="text/javascript">
+        function onClick(button){
+            let p = document.querySelector("p")
+            p.innerText=button.innerText
+        }
+    </script>
+
+</html>
