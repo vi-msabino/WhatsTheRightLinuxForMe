@@ -10,9 +10,9 @@
     <header class="base" title="TOP"> 
         <p>What is the best Linux Distribution for me?</p> 
     </header>
-    <main class="base">
-        <nav><p><input type="text" name="vorname"/></p></nav>
-        <div><a href="quiz.html"><img src="Tux.svg.png" type="img/png" width="250">Zum Starten auf das Bild von Tux klicken</a></div>
+    <main class="">
+        <p id="input"><input type="text" name="vorname"/></p>
+        <div><a href="quiz.html"><img id="tux" src="Tux.svg.png" type="img/png" width="300"><br><p id="bild1">Zum Starten auf das Bild von Tux klicken</p></a></div>
     </main>
     <footer class="base" title="BOTTOM">
         <p>© Sabino, Schreckenast</p>
@@ -51,8 +51,31 @@
         height:80%;
 
     }
-    a{
+    div{
+        align-items: center;
         justify-content: center;
+    }
+    a{
+        position:absolute;
+        width: 100%;
+        height: 100%;
+    }
+    #input{
+        left: 50%;
+        position: absolute;
+        transform: translate(-50%,-50%);
+    }
+    #tux{
+        top: 50%;
+        left:50%;
+        position: relative;
+        transform: translate(-50%,-50%);
+    }
+    #bild1{
+        top: 80%;
+        left:50%;
+        position: absolute;
+        transform: translate(-50%,-50%);
     }
     aside{
         position:absolute;
