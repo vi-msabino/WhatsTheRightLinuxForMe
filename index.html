@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="general.css">
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="general.js"></script>
+    <script type="text/ptp" src="teilnehmer.php"></script>
 </head>
 
 <body>
@@ -14,6 +15,9 @@
         <h1 id="header">What is the best Linux Distribution for me?</h1> 
         <button id="dark" onclick="onClick('button')"><img src="dark-white.png" type="img/png" title="Umstellen auf Dark/White-Mode" height="30px"></img></button>
     </header>
+    <?php 
+        include("teilnehmer.php");
+    ?>
     <main >
         <p id="eingabe"><label>Trage hier deinen Namen ein : </label><br><input id="input" type="text" name="vorname"/></p>
         <div><a href="quiz.html"><img id="tux" src="Tux.svg.png" type="img/png" width="300"><br><p id="bild1">Zum Starten auf das Bild von Tux klicken</p></a></div>
