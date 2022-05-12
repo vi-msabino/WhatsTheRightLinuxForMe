@@ -5,8 +5,8 @@
     $vorname = $_POST['vorname'].PHP_EOL;
     }
     if($vorname) {
-    $fp = fopen($myFile, 'a+') or die("can't open file"); //Make sure you have permission
-    fwrite($fp, 'vorname');
+    $fp = fopen($myFile, 'w+') or die("can't open file"); //Make sure you have permission
+    fwrite($fp, $vorname);
     fclose($fp);
     }
 /*
@@ -17,14 +17,14 @@
         $tn = array();
 
         while(!feof($fp))
-            $tn[]=unserialize(fgets($fp));
+            $tn[]=unserialize(fPOSTs($fp));
             if(is_array($array))
             $tn[]=$array;
 
 
-        if(!empty($_GET)){
-            fputs($fp, serialize($_GET). "\n");
-            $tn[]=$_GET;
+        if(!empty($_POST)){
+            fputs($fp, serialize($_POST). "\n");
+            $tn[]=$_POST;
         }
 
         if(!empty($tn)){
