@@ -68,3 +68,7 @@ aside{
     right:1%;
     animation: changecolor 50s infinite;
 }
+#Enter{
+    position:absolute;
+    top:30%;
+}
