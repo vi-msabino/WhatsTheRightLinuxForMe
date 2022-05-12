@@ -68,3 +68,13 @@ aside{
     right:1%;
     animation: changecolor 50s infinite;
 }
+#enter{
+    align-items: center;
+    justify-content:center;
+    text-align: center;
+    left:50%;   
+    transform: translate(-50%,0%);
+    position:absolute;
+    top:18%;
+    width: auto;
+}

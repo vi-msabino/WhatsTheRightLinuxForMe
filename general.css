@@ -51,7 +51,6 @@
 body{
     margin :0;
     background-color: var(--bc);
-    color:var(--tc);
 }
 header{
     display: flex;
@@ -70,4 +69,7 @@ footer{
     height:10%;
     top:90%;
     animation: changecolor 50s infinite;
+}
+.COLOR{
+    color:var(--tc);
 }
