@@ -68,7 +68,11 @@ aside{
     right:1%;
     animation: changecolor 50s infinite;
 }
-#Enter{
+#enter{
+    align-itmes:center;
+    justify-content:center;
+    left:50%;   
+    transform: translate(-50%,0%);
     position:absolute;
     top:30%;
 }
