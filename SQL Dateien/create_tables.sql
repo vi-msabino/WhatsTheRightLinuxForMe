@@ -11,9 +11,18 @@ create or replace table WhatstherightLinuxforme.Linux (
 );
 create or replace table WhatstherightLinuxforme.Desktop(
     d_name varchar(100) NOT NULL,
-    d_design varchar(100),
-    PRIMARY KEY (d_name)
+    d_windows_look boolean,
+    d_pfad_bild varchar(100),
+    PRIMARY KEY (des_name)
 );
+insert into WhatstherightLinuxforme.Desktop values ('KDE Plasma', true, 'kde.png');
+insert into WhatstherightLinuxforme.Desktop values ('Gnome', false, 'gnome.png');
+insert into WhatstherightLinuxforme.Desktop values ('Cinnamon', true, 'cinnamon.png');
+insert into WhatstherightLinuxforme.Desktop values ('Xfce', false, 'xfce.png');
+insert into WhatstherightLinuxforme.Desktop values ('MATE', true, 'mate.png');
+insert into WhatstherightLinuxforme.Desktop values ('LxQt', true, 'lxqt.png');
+insert into WhatstherightLinuxforme.Desktop values ('Pantheon', false, 'pantheon.png');
+
 create or replace table WhatstherightLinuxforme.Nutzer (
     n_id int NOT NULL AUTO_INCREMENT,
     n_name varchar(200),
