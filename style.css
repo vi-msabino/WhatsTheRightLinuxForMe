@@ -69,10 +69,12 @@ aside{
     animation: changecolor 50s infinite;
 }
 #enter{
-    align-itmes:center;
+    align-items: center;
     justify-content:center;
+    text-align: center;
     left:50%;   
     transform: translate(-50%,0%);
     position:absolute;
-    top:30%;
+    top:18%;
+    width: auto;
 }
