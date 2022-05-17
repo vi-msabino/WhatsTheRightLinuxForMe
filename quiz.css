@@ -1,0 +1,28 @@
+.Frage{
+    width:50%;
+    height:50%;
+    top:50%;
+    left:50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    display:none;
+    color:var(--tc);
+    text-align: center;
+}
+#Erfahrung{
+    display:block;
+}
+.Antworten{
+    text-align:left;
+    padding:10%;
+    font-size: medium;
+    align-items:stretch;
+}
+.h3{
+    padding:10%;
+    font-size:larger;
+}
+.input{
+    padding:50%;
+}
