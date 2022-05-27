@@ -25,8 +25,6 @@ insert into WhatstherightLinuxforme.Linux (l_name, l_konfigurierbarkeit, l_erfah
 values ('elementary OS', 0, 0, 0, false, true);
 insert into WhatstherightLinuxforme.Linux (l_name, l_konfigurierbarkeit, l_erfahrungsgrad, l_packetmanager, l_quelloffen, l_secure_boot)
 values ('Manjaro', 0, 0, 2, false, false);
-insert into WhatstherightLinuxforme.Linux (l_name, l_konfigurierbarkeit, l_erfahrungsgrad, l_packetmanager, l_quelloffen, l_secure_boot)
-values ('DeepIn', 0, 0, 0, true, true);
 
 create or replace table WhatstherightLinuxforme.Desktop(
     d_name varchar(100) NOT NULL,
