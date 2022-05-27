@@ -25,6 +25,8 @@ insert into WhatstherightLinuxforme.Linux (l_name, l_konfigurierbarkeit, l_erfah
 values ('elementary OS', 0, 0, 0, false, true);
 insert into WhatstherightLinuxforme.Linux (l_name, l_konfigurierbarkeit, l_erfahrungsgrad, l_packetmanager, l_quelloffen, l_secure_boot)
 values ('Manjaro', 0, 0, 2, false, false);
+insert into WhatstherightLinuxforme.Linux (l_name, l_konfigurierbarkeit, l_erfahrungsgrad, l_packetmanager, l_quelloffen, l_secure_boot)
+values ('DeepIn', 0, 0, 0, true, true);
 
 create or replace table WhatstherightLinuxforme.Desktop(
     d_name varchar(100) NOT NULL,
@@ -41,24 +43,24 @@ insert into WhatstherightLinuxforme.Desktop values ('LxQt', true, 'lxqt.png');
 insert into WhatstherightLinuxforme.Desktop values ('Pantheon', false, 'pantheon.png');
 
 create or replace table WhatstherightLinuxforme.HW_Anforderungen(
-    hw_id int not null AUTO_INCREMENT,
+    hw_id int not null,
     hw_value varchar(50),
     primary key(hw_id)
 );
 
-insert into WhatstherightLinuxforme.HW_Anforderungen (hw_value) values ('Uralt PCs (32 bit)');
-insert into WhatstherightLinuxforme.HW_Anforderungen (hw_value) values ('Schwache Hardware');
-insert into WhatstherightLinuxforme.HW_Anforderungen (hw_value) values ('Brandaktuelle Hardware');
+insert into WhatstherightLinuxforme.HW_Anforderungen (hw_id, hw_value) values (0, 'Uralt PCs (32 bit)');
+insert into WhatstherightLinuxforme.HW_Anforderungen (hw_id, hw_value) values (1, 'Schwache Hardware');
+insert into WhatstherightLinuxforme.HW_Anforderungen (hw_id, hw_value) values (2, 'Brandaktuelle Hardware');
 
 create or replace table WhatstherightLinuxforme.Aktualitaet(
-    ak_id int not null auto_increment,
+    ak_id int not null ,
     ak_value varchar(100),
     primary key(ak_id)
 );
 
-insert into WhatstherightLinuxforme.Aktualitaet (ak_value) values ('Rolling Release');
-insert into WhatstherightLinuxforme.Aktualitaet (ak_value) values ('Jährliche Updates');
-insert into WhatstherightLinuxforme.Aktualitaet (ak_value) values ('long time support');
+insert into WhatstherightLinuxforme.Aktualitaet (ak_id, ak_value) values (0, 'Rolling Release');
+insert into WhatstherightLinuxforme.Aktualitaet (ak_id, ak_value) values (1, 'Jährliche Updates');
+insert into WhatstherightLinuxforme.Aktualitaet (ak_id, ak_value) values (2, 'long time support');
 
 create or replace table WhatstherightLinuxforme.Nutzer (
     n_id int NOT NULL AUTO_INCREMENT,
@@ -137,19 +139,19 @@ create or replace table WhatstherightLinuxforme.Linux_HW_Anforderungen(
     PRIMARY KEY (nh_id)
 );
 
-insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('openSUSE Tumbleweed', 1);
+insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('openSUSE Tumbleweed', 0);
+insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('Debian', 0);
 insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('Debian', 1);
-insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('Debian', 2);
+insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('openSUSE Tumbleweed', 1);
+insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('Linux Mint', 1);
+insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('Arch Linux', 1);
+insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('MX Linux', 1);
 insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('openSUSE Tumbleweed', 2);
-insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('Linux Mint', 2);
 insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('Arch Linux', 2);
-insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('MX Linux', 2);
-insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('openSUSE Tumbleweed', 3);
-insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('Arch Linux', 3);
-insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('Fedora', 3);
-insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('Manjaro', 3);
-insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('elementary OS', 3);
-insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('Ubuntu', 3);
+insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('Fedora', 2);
+insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('Manjaro', 2);
+insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('elementary OS', 2);
+insert into WhatstherightLinuxforme.Linux_HW_Anforderungen (l_name, hw_id) values ('Ubuntu', 2);
 
 create or replace table WhatstherightLinuxforme.Linux_Aktualitaet(
     na_id int not null auto_increment,
@@ -159,14 +161,14 @@ create or replace table WhatstherightLinuxforme.Linux_Aktualitaet(
     foreign key(ak_id) REFERENCES WhatstherightLinuxforme.Aktualitaet(ak_id),
     PRIMARY KEY (na_id)
 );
-insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('Arch Linux', 1);
-insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('Manjaro', 1);
-insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('openSUSE Tumbleweed', 1);
-insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('Fedora', 2);
-insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('MX Linux', 2);
-insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('Ubuntu', 2);
-insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('elementary OS', 2);
+insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('Arch Linux', 0);
+insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('Manjaro', 0);
+insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('openSUSE Tumbleweed', 0);
+insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('Fedora', 1);
+insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('MX Linux', 1);
+insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('Ubuntu', 1);
+insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('elementary OS', 1);
+insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('Linux Mint', 1);
+insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('Debian', 2);
 insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('Linux Mint', 2);
-insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('Debian', 3);
-insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('Linux Mint', 3);
-insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('elementary OS', 3);
+insert into WhatstherightLinuxforme.Linux_Aktualitaet (l_name, ak_id) values ('elementary OS', 2);
