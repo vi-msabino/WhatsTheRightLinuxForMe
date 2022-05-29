@@ -1,4 +1,5 @@
 <?php
+// Start the session
 session_start();
 ?>
 <!DOCTYPE html>
@@ -13,84 +14,183 @@ session_start();
 </head>
 <body>
 <?php
-// define variables and set to empty values
-$erfahrung = $hardware = $anpassung = "";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $erfahrung = test_input($_POST["erfahrung"]);
-  $hardware = test_input($_POST["hardware"]);
-  $anpassung = test_input($_POST["anpassung"]);
-}
-
+$_SESSION["name"] = test_input($_GET["vorname"]);
 function test_input($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+  }
 ?>
     <header> 
         <h1 id="header">Was ist die beste Linux Distribution für mich?</h1> 
         <button id="dark" onclick="onClick('button')"><img src="dark-white.png" type="img/png" title="Umstellen auf Dark/White-Mode" height="30px"></img></button>
     </header>
     <main>
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <div class="Frage" id="Erfahrung">    
+    <form method="get" action="ergebnis.php">
+    <div class="Frage" id="erfahrungsgrad">    
       <h3>Wie viel Erfahrung haben Sie im Umgang mit Computern?</h3>
       <div class="Antworten">
-        <input type="radio" name="erfahrung" value="0">
+        <input type="radio" name="erfahrungsgrad" value="0">
         <label>Ich brauche Hilfe bei den vielen Problemen</label><br>
-        <input type="radio" name="erfahrung" value="1">
+        <input type="radio" name="erfahrungsgrad" value="1">
         <label>Ich kann kleinere Schwierigkeiten selbst bewältigen</label><br>
-        <input type="radio" name="erfahrung" value="2">
+        <input type="radio" name="erfahrungsgrad" value="2">
         <label>Ich komme mit Problemen gut klar</label><br>
       </div>
     </div>
-
-    <div class="Frage" id="Hardware">
+    <div class="Frage" id="hw_anforderungen">
         <h3>Auf welcher Hardware soll das Linux ausgeführt werden</h3>
       <div class="Antworten">
-        <input type="radio" name="hardware" value="0">
+        <input type="radio" name="hw_anforderungen" value="0">
         <label>Sehr alte Hardware mit 32 bit (Das ist bei Hardware, die jünger wie 5 Jahre ist, meist nicht der Fall)</label><br>
-        <input type="radio" name="hardware" value="1">
+        <input type="radio" name="hw_anforderungen" value="1">
         <label>Schwache Hardware</label><br>
-        <input type="radio" name="hardware" value="2">
+        <input type="radio" name="hw_anforderungen" value="2">
         <label>System mit den neusten technischen Spielereien</label><br>
       </div>
     </div>
-    <div class="Frage" id="Anpassbarkeit">    
+    <div class="Frage" id="konfigurierbarkeit">    
         <h3>Ist Ihnen eine hohe Konfigurierbarkeit bei Start wichtig?</h3>
       <div class="Antworten">
-        <input type="radio" name="anpassung" value="0">
+        <input type="radio" name="konfigurierbarkeit" value="0">
         <label>Ja, ich möchte sehr viel beim ersten Startvorgang einstellen</label><br>
-        <input type="radio" name="anpassung" value="1">
+        <input type="radio" name="konfigurierbarkeit" value="1">
         <label>Nein, ich möchte mich auf Voreinstellungen verlassen</label><br>
       </div>
     </div>
+    <div class="Frage" id="WinOderMac">    
+        <h3>Welches Betriebssystem gefällt Ihnen optisch am besten</h3>
+      <div class="Antworten">
+        <input type="radio" name="winmac" value="true">
+        <label>Windows</label><br>
+        <input type="radio" name="winmac" value="false">
+        <label>Mac OS</label><br>
+      </div>
+    </div>
+    <div class="Frage" id="Desktop">
+    <h3>Welcher dieser Desktops gefällt Ihnen am besten?</h3>
+      <div class="AntwortenMitBild" id="Win_Desktop_Antwort">
+        <div class="Desktop_Option">
+          <input type="checkbox" name="desktop" value="cinnamon">
+          <img src="Bilder/cinnamon.png" alt="cinnamon" >
+          <label>Cinnamon</label>
+        </div>
+        <div class="Desktop_Option">
+          <input type="checkbox" name="desktop" value="KDE Plasma">
+          <img src="Bilder/kde.png" alt="kde" >
+          <label>KDE Plasma</label>
+        </div>
+        <div class="Desktop_Option">
+          <input type="checkbox" name="desktop" value="LxQt">
+          <img src="Bilder/lxqt.png" alt="lxgt" >
+          <label>LxQt</label>
+        </div>
+        <div class="Desktop_Option">
+          <input type="checkbox" name="desktop" value="MATE">
+          <img src="Bilder/mate.png" alt="mate" >
+          <label>MATE</label>
+        </div>
+      </div>
+      <div class="AntwortenMitBild" id="Mac_Desktop_Antwort">
+        <div class="Desktop_Option">
+          <input type="checkbox" name="desktop" value="Gnome">
+          <img src="Bilder/gnome.png" alt="gnome" >
+          <label>Gnome</label>
+        </div>
+        <div class="Desktop_Option">
+          <input type="checkbox" name="desktop" value="Pantheon">
+          <img src="Bilder/pantheon.png" alt="pantheon" >
+          <label>Pantheon</label>
+        </div>
+        <div class="Desktop_Option">
+          <input type="checkbox" name="desktop" value="Xfce">
+          <img src="Bilder/xfce.png" alt="xfce" >
+          <label>Xfce</label>
+        </div>
+        
+      </div>
+      <div class="AntwortenMitBild" id="All_Desktop_Antwort">
+        <div class="Desktop_Option">
+          <input type="checkbox" name="desktop" value="Gnome">
+          <img src="Bilder/gnome.png" alt="gnome" >
+          <label>Gnome</label>
+        </div>
+        <div class="Desktop_Option">
+          <input type="checkbox" name="desktop" value="MATE">
+          <img src="Bilder/mate.png" alt="mate" >
+          <label>MATE</label>
+        </div>
+        <div class="Desktop_Option">
+          <input type="checkbox" name="desktop" value="Pantheon">
+          <img src="Bilder/pantheon.png" alt="pantheon" >
+          <label>Pantheon</label>
+        </div>
+        <div class="Desktop_Option">
+          <input type="checkbox" name="desktop" value="cinnamon">
+          <img src="Bilder/cinnamon.png" alt="cinnamon" >
+          <label>Cinnamon</label>
+        </div>
+        <div class="Desktop_Option">
+          <input type="checkbox" name="desktop" value="KDE Plasma">
+          <img src="Bilder/kde.png" alt="kde" >
+          <label>KDE Plasma</label>
+        </div>
+        <div class="Desktop_Option">
+          <input type="checkbox" name="desktop" value="LxQt">
+          <img src="Bilder/lxqt.png" alt="lxgt" >
+          <label>LxQt</label>
+        </div>
+        <div></div>
+        <div class="Desktop_Option">
+          <input type="checkbox" name="desktop" value="Xfce">
+          <img src="Bilder/xfce.png" alt="xfce" >
+          <label>Xfce</label>
+        </div>
+      </div>
+    </div>
+    <div class="Frage" id="secure_boot">    
+        <h3>Möchten Sie Secure Boot nutzen?</h3>
+      <div class="Antworten">
+        <input type="radio" name="secure_boot" value="true">
+        <label>Ja</label><br>
+        <input type="radio" name="secure_boot" value="false">
+        <label>Nein</label><br>
+      </div>
+    </div>
+    <div class="Frage" id="packetmanager">    
+        <h3>Welchen Packetmanager bevorzugen Sie?</h3>
+      <div class="Antworten">
+        <input type="radio" name="packetmanager" value="0">
+        <label>APT und DEB</label><br>
+        <input type="radio" name="packetmanager" value="1">
+        <label>RPM</label><br>
+        <input type="radio" name="packetmanager" value="1">
+        <label>PACMAN</label><br>
+      </div>
+    </div>
+    <div class="Frage" id="quelloffen">    
+        <h3>Bevorzugen Sie offene oder proprietäre Treiber?</h3>
+      <div class="Antworten">
+        <input type="radio" name="quelloffen" value="true">
+        <label>offene Treiber/Software</label><br>
+        <input type="radio" name="quelloffen" value="false">
+        <label>proprietäre Treiber und Software darf vorinstalliert sein</label><br>
+      </div>
+    </div>
       
-
-<input type="button" class="button" onclick="naechsteFrage()" id="next" value=">>"/>
-<input type="button" class="button" onclick="vorherigeFrage()" id="back" value="<<"/>
-<input type="submit" id="end_button" class="button" value="Quiz beenden"/>
+    <input type="button" class="button" onclick="naechsteFrage()" id="next" value=">>"/>
+    <input type="button" class="button" onclick="vorherigeFrage()" id="back" value="<<"/>
+    <input type="submit" id="end_button" class="button" value="Quiz beenden"/>
 
     </form>
-    </main>
-    <footer>
-        <p>© Sabino, Schreckenast</p> <br>
-        
-<?php
-echo "<p>";
-echo $_SESSION['name'];
-echo "s Input:";
-echo $erfahrung;
-echo $hardware;
-echo $anpassung;
-echo "</p>"
-?>
-    </footer>
+  </main>
+  <footer>
+    <p>© Sabino, Schreckenast</p> <br>
+  </footer>
 
 <style type="text/css">
-      .Frage{
+  .Frage{
     width:50%;
     height:50%;
     top:50%;
@@ -101,78 +201,150 @@ echo "</p>"
     display:none;
     color:var(--tc);
     text-align: center;
-}
-#Erfahrung{
+  }
+  #erfahrungsgrad{
     display:block;
-}
-.Antworten{
+  }
+  .Antworten{
     text-align:left;
     padding:10%;
     position:absolute;
     top: 20%;
     height:80%;
     font-size: large;
-}
-.h3{
+  }
+  .AntwortenMitBild{
+    position:absolute;
+    top:10%;
+    height:80%;
+    grid-template-columns: repeat(2, 1fr);
+    left: 10%;
+    width: 80%;
+    display: none;
+  }
+  #All_Desktop_Antwort{
+    grid-template-columns: repeat(3, 1fr);
+  }
+  #Desktop{
+    top: 12%;
+    height: 75%;
+    left:22%;
+    width: 56%;
+    transform: translate(0%,0%);
+  }
+  .Desktop_Option{
+    position: relative;
+    top:0%;
+    width: 100%;
+    align-items: center;
+  }
+  img{
+    width:95%;
+  }
+  /*img:hover{
+    transform: translate(-50%,-50%);
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:150%;
+  }*/
+  .h3{
     padding:10%;
     font-size:larger;
-}
-.button{
-  position: absolute;
-  top: 50%;
-  transform: translate(0%, -50%);
-  display: block;
-  width: 5%;
-  height:2.5%;
-  animation: changecolor 50s infinite;
-  border:2px solid black;
-}
-#next{
-  left:85%;
-}
-#back{
-  left:15%;
-  display:none;
-}
-#end_button{
-  left:85%;
-  top:70%;
-}
+  }
+  .button{
+    position: absolute;
+    top: 50%;
+    transform: translate(0%, -50%);
+    display: block;
+    width: 5%;
+    height:2.5%;
+    animation: changecolor 50s infinite;
+    border:2px solid var(--tc);
+  }
+  #next{
+    left:85%;
+  }
+  #back{
+    left:15%;
+    visibility: hidden;
+  }
+  #end_button{
+    left:85%;
+    top:70%;
+  }
 </style>
 <script type="text/javascript">
-
-    /*function naechsteFrage(nextId, curId){
-        let curForm = document.getElementById(curId);
-        let nextForm = document.getElementById(nextId);
-        curForm.style.display = 'none';
-        nextForm.style.display = 'block';
-        console.log(curForm);
-        console.log(nextForm);
-    }*/
 
     var frage = document.getElementsByClassName('Frage')
     var vor = document.getElementById('next');
     var zurueck = document.getElementById('back');
     var cur = 0
-   
-      
+    var anzFragen = 6;
     function naechsteFrage(a, b){
       frage[cur].style.display = 'none'
       cur = cur +1
       frage[cur].style.display = 'block'
+      if(frage[cur].id == "Desktop")
+        WinOderMac()
       
-      zurueck.style.display = 'block'
-      if(cur > 9)
-        vor.style.display = 'none'
+      if(frage[cur].id = "erfahrungsgrad")
+        removeOrAddAdvancesQuestions();
+      
+      zurueck.style.visibility = 'visible'
+      if(cur > anzFragen)
+        vor.style.visibility = 'hidden'
     }
     function vorherigeFrage(){
       frage[cur].style.display = 'none'
       cur = cur -1
       frage[cur].style.display = 'block'
       
-      vor.style.display = 'block'
+      if(frage[cur].id == "Desktop")
+        WinOderMac()
+
+      if(frage[cur].id = "erfahrungsgrad")
+        removeOrAddAdvancesQuestions();
+      
+      vor.style.visibility = 'visible'
       if(cur == 0)
-        zurueck.style.display = 'none'
+        zurueck.style.visibility = 'hidden'
+    }
+    function WinOderMac() {    
+      var getSelectedValue = document.querySelector('input[name="winmac"]:checked');   
+
+      var mac_desktop = document.getElementById('Mac_Desktop_Antwort');
+      var win_desktop = document.getElementById('Win_Desktop_Antwort');
+      var all_desktop = document.getElementById('All_Desktop_Antwort');
+      if(getSelectedValue != null) {  
+        all_desktop.style.display = 'none'; 
+        var winmac = getSelectedValue.value;
+        if(winmac == "true"){
+          mac_desktop.style.display = 'none';
+          win_desktop.style.display = 'grid';
+        }else{
+          mac_desktop.style.display = 'grid';
+          win_desktop.style.display = 'none';
+        }
+      }   
+      else {
+        all_desktop.style.display = 'grid';
+        mac_desktop.style.display = 'none';
+        win_desktop.style.display = 'none';
+      }   
+    }  
+    function removeOrAddAdvancesQuestions(){
+      var getSelectedValue = document.querySelector('input[name="erfahrungsgrad"]:checked');
+      if(getSelectedValue != null) {
+        var experience = getSelectedValue.value;
+        if(experience == "0"){
+          anzFragen = 3
+        }else{
+          anzFragen = 6
+        }
+      }else{
+        anzFragen = 6
+      }
     }
 </script>
 </body>
