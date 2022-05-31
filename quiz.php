@@ -14,6 +14,9 @@ session_start();
 </head>
 <body>
 <?php
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
+
+ini_set('display_errors', '1');
 $_SESSION["name"] = test_input($_GET["vorname"]);
 function test_input($data) {
     $data = trim($data);
@@ -285,8 +288,11 @@ function test_input($data) {
       frage[cur].style.display = 'none'
       cur = cur +1
       frage[cur].style.display = 'block'
-      if(frage[cur].id == "Desktop")
+      if(frage[cur].id == "Desktop"){
         WinOderMac()
+        console.log("I do something better")
+      }
+      console.log(frage[cur].id)
       
       if(frage[cur].id = "erfahrungsgrad")
         removeOrAddAdvancesQuestions();
@@ -298,10 +304,11 @@ function test_input($data) {
     function vorherigeFrage(){
       frage[cur].style.display = 'none'
       cur = cur -1
-      frage[cur].style.display = 'block'
-      
-      if(frage[cur].id == "Desktop")
+      frage[cur].style.display = 'block';
+      if(frage[cur].id == "Desktop"){
         WinOderMac()
+        console.log("I do something")
+      }
 
       if(frage[cur].id = "erfahrungsgrad")
         removeOrAddAdvancesQuestions();
@@ -312,7 +319,7 @@ function test_input($data) {
     }
     function WinOderMac() {    
       var getSelectedValue = document.querySelector('input[name="winmac"]:checked');   
-
+      
       var mac_desktop = document.getElementById('Mac_Desktop_Antwort');
       var win_desktop = document.getElementById('Win_Desktop_Antwort');
       var all_desktop = document.getElementById('All_Desktop_Antwort');
@@ -336,8 +343,7 @@ function test_input($data) {
     function removeOrAddAdvancesQuestions(){
       var getSelectedValue = document.querySelector('input[name="erfahrungsgrad"]:checked');
       if(getSelectedValue != null) {
-        var experience = getSelectedValue.value;
-        if(experience == "0"){
+        if(getSelectedValue.value == "0"){
           anzFragen = 3
         }else{
           anzFragen = 6
