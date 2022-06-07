@@ -13,7 +13,7 @@
         <h1 id="header">What is the best Linux Distribution for me?</h1> 
         <button id="dark" onclick="onClick('button')"><img src="dark-white.png" type="img/png" title="Umstellen auf Dark/White-Mode" height="30px"></img></button>
     </header>
-    <form method="GET" action="quiz_01.php">
+    <form method="GET" action="quiz.php">
         <label id="text">Trage hier deinen Namen ein : </label><br>
         <input type="text" name="vorname" id="textInput"/>
 	    <nav id="enter">Enter drücken um den Namen einzugeben!</nav>

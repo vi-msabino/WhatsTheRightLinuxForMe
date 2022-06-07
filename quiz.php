@@ -294,7 +294,7 @@ function test_input($data) {
       }
       console.log(frage[cur].id)
       
-      if(frage[cur].id = "erfahrungsgrad")
+      if(frage[cur].id == "erfahrungsgrad")
         removeOrAddAdvancesQuestions();
       
       zurueck.style.visibility = 'visible'
@@ -310,7 +310,7 @@ function test_input($data) {
         console.log("I do something")
       }
 
-      if(frage[cur].id = "erfahrungsgrad")
+      if(frage[cur].id == "erfahrungsgrad")
         removeOrAddAdvancesQuestions();
       
       vor.style.visibility = 'visible'
