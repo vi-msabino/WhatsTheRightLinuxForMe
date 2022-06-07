@@ -51,6 +51,8 @@ function test_input($data) {
         <label>Schwache Hardware</label><br>
         <input type="radio" name="hw_anforderungen" value="2">
         <label>System mit den neusten technischen Spielereien</label><br>
+        <input type="radio" name="hw_anforderungen" value="-1">
+        <label>Ich möchte virtualisieren oder habe durchschnittliche Hardware</label><br>
       </div>
     </div>
     <div class="Frage" id="konfigurierbarkeit">    
@@ -60,6 +62,21 @@ function test_input($data) {
         <label>Ja, ich möchte sehr viel beim ersten Startvorgang einstellen</label><br>
         <input type="radio" name="konfigurierbarkeit" value="1">
         <label>Nein, ich möchte mich auf Voreinstellungen verlassen</label><br>
+        <input type="radio" name="konfigurierbarkeit" value="-1">
+        <label>Ich habe keine Präferenz</label><br>
+      </div>
+    </div>
+    <div class="Frage" id="Aktualisierungen">    
+        <h3>Welchen Update-Rytmus bevorzugen Sie?</h3>
+      <div class="Antworten">
+        <input type="radio" name="aktualisierungen" value="0">
+        <label>häufige Updates und neueste Software mit erhöhter Fehleranfälligkeit</label><br>
+        <input type="radio" name="aktualisierungen" value="1">
+        <label>jährliche große und stabile Updates mit etwas langsameren Zugang zu den neuesten Tools</label><br>
+        <input type="radio" name="aktualisierungen" value="2">
+        <label>Updates ohne große Änderungen und guter Unterstützung älterer Projekte, aber ohne die neuesten Tools</label><br>
+        <input type="radio" name="aktualisierungen" value="-1">
+        <label>Ich habe keine Präferenz</label><br>
       </div>
     </div>
     <div class="Frage" id="WinOderMac">    
@@ -69,45 +86,47 @@ function test_input($data) {
         <label>Windows</label><br>
         <input type="radio" name="winmac" value="false">
         <label>Mac OS</label><br>
+        <input type="radio" name="winmac" value="null">
+        <label>Ich habe keine Präferenz</label><br>
       </div>
     </div>
     <div class="Frage" id="Desktop">
     <h3>Welcher dieser Desktops gefällt Ihnen am besten?</h3>
       <div class="AntwortenMitBild" id="Win_Desktop_Antwort">
         <div class="Desktop_Option">
-          <input type="checkbox" name="desktop" value="cinnamon">
+          <input type="checkbox" name="desktop[]" value="cinnamon">
           <img src="Bilder/cinnamon.png" alt="cinnamon" >
           <label>Cinnamon</label>
         </div>
         <div class="Desktop_Option">
-          <input type="checkbox" name="desktop" value="KDE Plasma">
+          <input type="checkbox" name="desktop[]" value="KDE Plasma">
           <img src="Bilder/kde.png" alt="kde" >
           <label>KDE Plasma</label>
         </div>
         <div class="Desktop_Option">
-          <input type="checkbox" name="desktop" value="LxQt">
+          <input type="checkbox" name="desktop[]" value="LxQt">
           <img src="Bilder/lxqt.png" alt="lxgt" >
           <label>LxQt</label>
         </div>
         <div class="Desktop_Option">
-          <input type="checkbox" name="desktop" value="MATE">
+          <input type="checkbox" name="desktop[]" value="MATE">
           <img src="Bilder/mate.png" alt="mate" >
           <label>MATE</label>
         </div>
       </div>
       <div class="AntwortenMitBild" id="Mac_Desktop_Antwort">
         <div class="Desktop_Option">
-          <input type="checkbox" name="desktop" value="Gnome">
+          <input type="checkbox" name="desktop[]" value="Gnome">
           <img src="Bilder/gnome.png" alt="gnome" >
           <label>Gnome</label>
         </div>
         <div class="Desktop_Option">
-          <input type="checkbox" name="desktop" value="Pantheon">
+          <input type="checkbox" name="desktop[]" value="Pantheon">
           <img src="Bilder/pantheon.png" alt="pantheon" >
           <label>Pantheon</label>
         </div>
         <div class="Desktop_Option">
-          <input type="checkbox" name="desktop" value="Xfce">
+          <input type="checkbox" name="desktop[]" value="Xfce">
           <img src="Bilder/xfce.png" alt="xfce" >
           <label>Xfce</label>
         </div>
@@ -115,38 +134,38 @@ function test_input($data) {
       </div>
       <div class="AntwortenMitBild" id="All_Desktop_Antwort">
         <div class="Desktop_Option">
-          <input type="checkbox" name="desktop" value="Gnome">
+          <input type="checkbox" name="desktop[]" value="Gnome">
           <img src="Bilder/gnome.png" alt="gnome" >
           <label>Gnome</label>
         </div>
         <div class="Desktop_Option">
-          <input type="checkbox" name="desktop" value="MATE">
+          <input type="checkbox" name="desktop[]" value="MATE">
           <img src="Bilder/mate.png" alt="mate" >
           <label>MATE</label>
         </div>
         <div class="Desktop_Option">
-          <input type="checkbox" name="desktop" value="Pantheon">
+          <input type="checkbox" name="desktop[]" value="Pantheon">
           <img src="Bilder/pantheon.png" alt="pantheon" >
           <label>Pantheon</label>
         </div>
         <div class="Desktop_Option">
-          <input type="checkbox" name="desktop" value="cinnamon">
+          <input type="checkbox" name="desktop[]" value="cinnamon">
           <img src="Bilder/cinnamon.png" alt="cinnamon" >
           <label>Cinnamon</label>
         </div>
         <div class="Desktop_Option">
-          <input type="checkbox" name="desktop" value="KDE Plasma">
+          <input type="checkbox" name="desktop[]" value="KDE Plasma">
           <img src="Bilder/kde.png" alt="kde" >
           <label>KDE Plasma</label>
         </div>
         <div class="Desktop_Option">
-          <input type="checkbox" name="desktop" value="LxQt">
+          <input type="checkbox" name="desktop[]" value="LxQt">
           <img src="Bilder/lxqt.png" alt="lxgt" >
           <label>LxQt</label>
         </div>
         <div></div>
         <div class="Desktop_Option">
-          <input type="checkbox" name="desktop" value="Xfce">
+          <input type="checkbox" name="desktop[]" value="Xfce">
           <img src="Bilder/xfce.png" alt="xfce" >
           <label>Xfce</label>
         </div>
@@ -159,6 +178,8 @@ function test_input($data) {
         <label>Ja</label><br>
         <input type="radio" name="secure_boot" value="false">
         <label>Nein</label><br>
+        <input type="radio" name="secure_boot" value="null">
+        <label>Ich habe keine Präferenz</label><br>
       </div>
     </div>
     <div class="Frage" id="packetmanager">    
@@ -168,8 +189,10 @@ function test_input($data) {
         <label>APT und DEB</label><br>
         <input type="radio" name="packetmanager" value="1">
         <label>RPM</label><br>
-        <input type="radio" name="packetmanager" value="1">
+        <input type="radio" name="packetmanager" value="2">
         <label>PACMAN</label><br>
+        <input type="radio" name="packetmanager" value="-1">
+        <label>Ich bin nicht sicher, was ein Packetmanager ist oder habe keine Präferenz</label><br>
       </div>
     </div>
     <div class="Frage" id="quelloffen">    
@@ -179,6 +202,8 @@ function test_input($data) {
         <label>offene Treiber/Software</label><br>
         <input type="radio" name="quelloffen" value="false">
         <label>proprietäre Treiber und Software darf vorinstalliert sein</label><br>
+        <input type="radio" name="quelloffen" value="null">
+        <label>Ich habe keine Präferenz</label><br>
       </div>
     </div>
       
@@ -242,7 +267,7 @@ function test_input($data) {
     align-items: center;
   }
   img{
-    width:95%;
+    width:90%;
   }
   /*img:hover{
     transform: translate(-50%,-50%);
@@ -283,19 +308,18 @@ function test_input($data) {
     var vor = document.getElementById('next');
     var zurueck = document.getElementById('back');
     var cur = 0
-    var anzFragen = 6;
+    var anzFragen = 7;
     function naechsteFrage(a, b){
+      if(frage[cur].id == "erfahrungsgrad")
+        removeOrAddAdvancesQuestions();
+      
       frage[cur].style.display = 'none'
       cur = cur +1
       frage[cur].style.display = 'block'
       if(frage[cur].id == "Desktop"){
         WinOderMac()
-        console.log("I do something better")
       }
-      console.log(frage[cur].id)
       
-      if(frage[cur].id == "erfahrungsgrad")
-        removeOrAddAdvancesQuestions();
       
       zurueck.style.visibility = 'visible'
       if(cur > anzFragen)
@@ -307,51 +331,51 @@ function test_input($data) {
       frage[cur].style.display = 'block';
       if(frage[cur].id == "Desktop"){
         WinOderMac()
-        console.log("I do something")
       }
 
       if(frage[cur].id == "erfahrungsgrad")
-        removeOrAddAdvancesQuestions();
+        removeOrAddAdvancesQuestions()
       
       vor.style.visibility = 'visible'
       if(cur == 0)
         zurueck.style.visibility = 'hidden'
     }
     function WinOderMac() {    
-      var getSelectedValue = document.querySelector('input[name="winmac"]:checked');   
-      
-      var mac_desktop = document.getElementById('Mac_Desktop_Antwort');
-      var win_desktop = document.getElementById('Win_Desktop_Antwort');
-      var all_desktop = document.getElementById('All_Desktop_Antwort');
+      var getSelectedValue = document.querySelector('input[name="winmac"]:checked')
+      var mac_desktop = document.getElementById('Mac_Desktop_Antwort')
+      var win_desktop = document.getElementById('Win_Desktop_Antwort')
+      var all_desktop = document.getElementById('All_Desktop_Antwort')
       if(getSelectedValue != null) {  
-        all_desktop.style.display = 'none'; 
-        var winmac = getSelectedValue.value;
+        all_desktop.style.display = 'none'
+        var winmac = getSelectedValue.value
         if(winmac == "true"){
-          mac_desktop.style.display = 'none';
-          win_desktop.style.display = 'grid';
+          mac_desktop.style.display = 'none'
+          win_desktop.style.display = 'grid'
         }else{
-          mac_desktop.style.display = 'grid';
-          win_desktop.style.display = 'none';
+          mac_desktop.style.display = 'grid'
+          win_desktop.style.display = 'none'
         }
       }   
       else {
-        all_desktop.style.display = 'grid';
-        mac_desktop.style.display = 'none';
-        win_desktop.style.display = 'none';
+        all_desktop.style.display = 'grid'
+        mac_desktop.style.display = 'none'
+        win_desktop.style.display = 'none'
       }   
     }  
     function removeOrAddAdvancesQuestions(){
       var getSelectedValue = document.querySelector('input[name="erfahrungsgrad"]:checked');
       if(getSelectedValue != null) {
         if(getSelectedValue.value == "0"){
-          anzFragen = 3
+          anzFragen = 4
+          console.log("Hi")
         }else{
-          anzFragen = 6
+          anzFragen = 7
         }
       }else{
-        anzFragen = 6
+        anzFragen = 7
       }
     }
 </script>
 </body>
 </html>
+

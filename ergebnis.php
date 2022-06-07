@@ -72,5 +72,10 @@ if (mysqli_multi_query($conn, $insert_n_desk)) {
 } else {
   echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 }
+
+//ab hier sind alle Daten des Nutzers in der Datenbank unter der id in curr_id
+//jetzt muss das Linux gefunden werden
+$search_linux = "select l_name from Linux where ";
+if($hw_anforderungen == 0 || $hw_anforderungen == 2 || )
 $conn->close();
 ?> 
