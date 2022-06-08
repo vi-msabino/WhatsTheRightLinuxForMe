@@ -10,6 +10,7 @@ session_start();
     <title>Welcome to our Distro-Chooser</title>
     <link rel="stylesheet" href="general.css">
     <!--link rel="stylesheet" href="quiz.css"-->
+    <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="general.js"></script>
 </head>
 <body>
@@ -378,4 +379,3 @@ function test_input($data) {
 </script>
 </body>
 </html>
-

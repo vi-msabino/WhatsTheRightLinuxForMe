@@ -42,15 +42,16 @@ a{
 #tux{
     top: 40%;
     left:50%;
-    position: relative;
+    width: 10%;
+    position: absolute;
     transform: translate(-50%,-50%);
 }
-#bild1{
+/*#bild1{
     top: 80%;
     left:50%;
     position: absolute;
     transform: translate(-50%,-50%);
-}
+}*/
 aside{
     position:absolute;
     top:10%;
@@ -60,7 +61,9 @@ aside{
 }
 #header{
     position: absolute;
-    left:50%;
+    justify-content: center;
+    text-align: center;
+    right:50%;
     transform: translate(-50%,0%);
 }
 #dark{
