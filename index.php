@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <meta name="What is the best Linux Distribution for me?">
     <title>Welcome to our Distro-Chooser</title>
+    <link rel="shortcut icon" href="favicon.ico" title="ico" type="image/x-icon">
     <link rel="stylesheet" href="general.css">
-    <!--link rel="stylesheet" href="style.css"-->
+    <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="general.js"></script>
 </head>
 <body class="COLOR">
@@ -34,13 +35,17 @@
             transform: translate(-50%, 0%);
         }
         #bild1{
-            top:20%;
-            position: relative;
+            top:60%;
+            left:50%;
+            position: absolute;
+            transform: translate(-50%,-50%);
         }
         #bild{
-            top:15%;
-            height: 60%;
-            position: relative;
+            top: 40%;
+            left:50%;
+            width: 10%;
+            position: absolute;
+            transform: translate(-50%,-50%);
         }
         #text{
             position:relative;
