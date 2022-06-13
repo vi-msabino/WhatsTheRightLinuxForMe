@@ -57,9 +57,9 @@ function test_input($data) {
     <div class="Frage" id="konfigurierbarkeit">    
         <h3>Ist Ihnen eine hohe Konfigurierbarkeit bei Start wichtig?</h3>
       <div class="Antworten">
-        <input id="konfigurierbarkeit_0" type="radio" name="konfigurierbarkeit" value="0">
+        <input id="konfigurierbarkeit_0" type="radio" name="konfigurierbarkeit" value="1">
         <label for="konfigurierbarkeit_0">Ja, ich möchte sehr viel beim ersten Startvorgang einstellen</label><br>
-        <input id="konfigurierbarkeit_1" type="radio" name="konfigurierbarkeit" value="1">
+        <input id="konfigurierbarkeit_1" type="radio" name="konfigurierbarkeit" value="0">
         <label for="konfigurierbarkeit_1">Nein, ich möchte mich auf Voreinstellungen verlassen</label><br>
         <input id="konfigurierbarkeit_-1" type="radio" name="konfigurierbarkeit" value="-1">
         <label for="konfigurierbarkeit_-1">Ich habe keine Präferenz</label><br>

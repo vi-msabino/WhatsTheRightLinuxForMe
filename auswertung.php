@@ -1,7 +1,7 @@
 <?php
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
+//error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
 
-ini_set('display_errors', '1');
+//ini_set('display_errors', '1');
 $servername = "localhost";
 $username = "user";
 $password = "password";
@@ -112,9 +112,7 @@ $linuxe = array("Linux Mint", "Ubuntu", "MX Linux", "elementary OS", "Debian", "
                 );
                 $relevant = $_GET["fragen"];
                 $result = $conn->query("select count(*) from Linux;");
-                if ($relevant == 'desktop') {
-                    echo '<p> <-- </p>';
-                } else {
+                
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             $all_Linux = $row["count(*)"];
@@ -136,7 +134,7 @@ $linuxe = array("Linux Mint", "Ubuntu", "MX Linux", "elementary OS", "Debian", "
                         }
                         echo "<tr><td>" . $antwort_lang[$relevant][$i] . "</td><td> " . '<meter value="' . $curr . '" min="0" max="' . $all_Linux . '">25%</meter></td><td>' . round($curr / $all_Linux * 100) . '%</td></tr>';
                     }
-                }
+                
                 ?>
             </table>
         </div>

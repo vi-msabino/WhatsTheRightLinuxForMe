@@ -1,53 +1,8 @@
 <?php
 session_start();
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
+//error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
 
-ini_set('display_errors', '1');
-function test_input($data)
-{
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  if ($data == null) {
-    $data = 'null';
-  }
-  return $data;
-}
-
-function checkForBetween0And2($data)
-{
-  if ($data == 0 || $data == 1 || $data == 2) {
-    return $data;
-  } else {
-    return 'null';
-  }
-}
-function checkForBetween0And1($data)
-{
-  if ($data == 0 || $data == 1) {
-    return $data;
-  } else {
-    return 'null';
-  }
-}
-function checkForTrueOrFalse($data)
-{
-  if ($data == 'true' || $data == 'false') {
-    return $data;
-  } else {
-    return 'null';
-  }
-}
-function clearStoredResults()
-{
-  global $conn;
-
-  do {
-    if ($res = $conn->store_result()) {
-      $res->free();
-    }
-  } while ($conn->more_results() && $conn->next_result());
-}
+//ini_set('display_errors', '1');
 $servername = "localhost";
 $username = "user";
 $password = "password";
@@ -72,27 +27,27 @@ if ($result->num_rows > 0) { //wenn irgendwas zurückgeliefert wird
 } else {
   die("Couldn't query Nutzer"); // wenn ich gar keine ID kriege, ist was größer schiefgelaufen
 }
-
-// name wird nicht getestet, weil das schon in der quiz.php passiert ist, beim Schreiben in die session
 $name = $_SESSION["name"];
 $curr_id = $prev_id + 1;
-//zeug aus der url lesen und überprüfen
-$hw_anforderungen = checkForBetween0And2(test_input($_GET["hw_anforderungen"]));
-$erfahrungsgrad = checkForBetween0And2(test_input($_GET["erfahrungsgrad"]));
-$konfigurierbarkeit = checkForBetween0And1(test_input($_GET["konfigurierbarkeit"]));
-$aktualisierungen = checkForBetween0And2(test_input($_GET["aktualisierungen"]));
-$secure_boot = checkForTrueOrFalse(test_input($_GET["secure_boot"]));
-$packetmanager = checkForBetween0And2(test_input($_GET["packetmanager"]));
-$quelloffen = checkForTrueOrFalse(test_input($_GET["quelloffen"]));
 
+$tre_val = array('0', '1', '2');
+$hw_anforderungen = new Node($_GET["hw_anforderungen"], "passt zur Hardware", "l_name in (select l_name from Linux_HW_Anforderungen where hw_id = ", ")", $tre_val, 2);
+$erfahrungsgrad = new Node($_GET["erfahrungsgrad"], "Erfahrungsgrad", "l_erfahrungsgrad in (", ")", $tre_val, 1);
+$konfigurierbarkeit = new Node($_GET["konfigurierbarkeit"], "Konfigurierbarkeit bei der Installation", "l_konfigurierbarkeit = ", "", array('0', '1'), 5);
+$aktualisierungen = new Node($_GET["aktualisierungen"], "Update Rythmus", "l_name in (select l_name from Linux_Aktualitaet where ak_id = ", ")", $tre_val, 3);
+$secure_boot = new Node($_GET["secure_boot"], "Unterstützung von Secure Boot", "l_secure_boot = ", "", array('true', 'false'), 8);
+$packetmanager = new Node($_GET["packetmanager"], "Packetmanager", "l_packetmanager = ", "", $tre_val, 7);
+$quelloffen = new Node($_GET["quelloffen"], "quelloffene vs. proprietäre Treiber", "l_quelloffen = ", "", array('true', 'false'), 6);
+//$desktop = new Node($_GET["quelloffen"], "quelloffene vs. proprietäre Treiber", "l_name in (select l_name from Linux_HW_Anforderungen where hw_id = ", ")", $tre_val, 2);
+$fragen = array($hw_anforderungen, $erfahrungsgrad, $konfigurierbarkeit, $aktualisierungen, $secure_boot, $packetmanager, $quelloffen);
 //insert in die Tabelle Nutzer
 $basic_insert = "INSERT INTO Nutzer (n_id, n_name, n_hw_anforderungen, n_erfahrungsgrad, n_konfigurierbarkeit, n_aktualisierungen, n_secure_boot, n_packetmanager, n_quelloffen)
-VALUES ($curr_id, '$name', $hw_anforderungen, $erfahrungsgrad, $konfigurierbarkeit ,$aktualisierungen , $secure_boot,$packetmanager  , $quelloffen );";
+VALUES ($curr_id, '$name', " . $fragen[0]->getVal() . ", " . $fragen[1]->getVal() . ", " . $fragen[2]->getVal() . ", " . $fragen[3]->getVal() . ", " . $fragen[4]->getVal() . ", " . $fragen[5]->getVal() . ", " . $fragen[6]->getVal() . ");";
 
 if ($conn->query($basic_insert) === TRUE) {
   //echo "Neuer Nutzer angelegt <br>";
 } else {
-  echo "Error: " . $basic_insert . "<br>" . $conn->error;
+  //echo "Error: " . $basic_insert . "<br>" . $conn->error;
 }
 
 //insert in die Tabelle Nutzer_Desktop
@@ -100,116 +55,57 @@ $i = 0;
 $desktop_selected = 'false';
 $insert_n_desk = "";
 while (isset($_GET["desktop"][$i])) {
-  $curr_desk = test_input($_GET["desktop"][$i]);
+  $curr_desk = htmlspecialchars($_GET["desktop"][$i]);
   $i++;
   if ($curr_desk == "Cinnamon" || $curr_desk == "Gnome" || $curr_desk == "KDE Plasma" || $curr_desk == "LxQt" || $curr_desk == "MATE" || $curr_desk == "Pantheon" || $curr_desk == "Xfce") {
     $insert_n_desk .= "INSERT INTO Nutzer_Desktop (n_id, d_name) VALUES ($curr_id, '$curr_desk');";
-    
+
     $desktop_selected = 'true';
   } else {
-    echo "unbekannter Desktop";
+    //echo "unbekannter Desktop";
   }
 }
+//echo $insert_n_desk;
 if (!($insert_n_desk == "")) {
   if (mysqli_multi_query($conn, $insert_n_desk)) {
     //echo "Desktop Auswahl gespeichert <br>";  }
   } else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    //echo "Error: " . $sql . "<br>" . mysqli_error($conn);
   }
 }
-
-//ab hier sind alle Daten des Nutzers in der Datenbank unter der id in curr_id
-//jetzt muss das Linux gefunden werden
+$desktop_respected = "false";
 $priority = 9;
 $linuxe = array();
-$fulfilled = array($erfahrungsgrad => "false",$hw_anforderungen => "false",$konfigurierbarkeit=> "false",$aktualisierungen => "false", $packetmanager=>"false",$quelloffen=>"false",$secure_boot=>"false",$desktop_selected =>"false");
 while ($priority > 0) {
   $am_i_the_first = 'true';
-  $search_linux = "select l_name from Linux";
-  if ($priority > 1) {
-    $search_linux .= " where ";
-    
-    if ($erfahrungsgrad == 0) {
-      $search_linux .= "l_erfahrungsgrad = 0";
-      $am_i_the_first = 'false';
-      $fulfilled[$erfahrungsgrad] = 'true';
+  $search_linux = "select l_name from Linux where ";
+  for ($i = 0; $i < count($fragen); $i++) {
+    $select = $fragen[$i]->get_select($priority, $am_i_the_first);
+    //echo $select."x";
+    if ($select == "") {
+    } else {
+      $search_linux .= $select;
+      $select = "";
+      $am_i_the_first = "false";
     }
-    if ($erfahrungsgrad == 1) {
-      $search_linux .= "l_erfahrungsgrad in (0, 1)";
-      $am_i_the_first = 'false';
-      $fulfilled[$erfahrungsgrad] = 'true';
-    }
-    if ($erfahrungsgrad == 2) {
-      $search_linux .= "l_erfahrungsgrad in (0, 1, 2)";
-      $am_i_the_first = 'false';
-      $fulfilled[$erfahrungsgrad] = 'true';
-    }
-  } else {
-    $search_linux .= ";";
   }
-  if ($priority > 2 && ($hw_anforderungen == 0 || $hw_anforderungen == 1 || $hw_anforderungen == 2)) {
+  if ($priority > 4 && $desktop_selected == 'true') {
     if ($am_i_the_first == 'false') {
       $search_linux .= " and ";
     }
-    $search_linux .= "l_name in (select l_name from Linux_HW_Anforderungen where hw_id = " . $hw_anforderungen . ")";
+    $search_linux .= "l_name in (select l_name from Linux_Desktop where d_name in (select d_name from Nutzer_Desktop where n_id = " . $curr_id . "))";
     $am_i_the_first = 'false';
-    $fulfilled[$hw_anforderungen] = 'true';
-  }
-  if ($priority > 5 && ($konfigurierbarkeit == 0 || $konfigurierbarkeit == 1)) {
-    if ($am_i_the_first == 'false') {
-      $search_linux .= " and ";
-    }
-    $search_linux .= "l_konfigurierbarkeit = " . $konfigurierbarkeit;
-    $am_i_the_first = 'false';
-    $fulfilled[$konfigurierbarkeit] = 'true';
-  }
-  if ($priority > 3 && ($aktualisierungen == 0 || $aktualisierungen == 1 || $aktualisierungen == 2)) {
-    if ($am_i_the_first == 'false') {
-      $search_linux .= " and ";
-    }
-    $search_linux .= "l_name in (select l_name from Linux_Aktualitaet where ak_id = " . $aktualisierungen . ")";
-    $am_i_the_first = 'false';
-    $fulfilled[$aktualisierungen] = 'true';
-  }  //suchparameter desktop, keine Grenzwertüberprüfung, weil schon beim Einfügen passiert  
-  if ($priority > 4 && $desktop_selected=='true') {
-  if ($am_i_the_first == 'false') {
-    $search_linux .= " and ";
-  }
-  $search_linux .= "l_name in (select l_name from Linux_Desktop where d_name in (select d_name from Nutzer_Desktop where n_id = " . $curr_id . "))";
-  $am_i_the_first = 'false';
-  $fulfilled[$desktop_selected] = 'true';
-}
-  if ($priority > 8 && $secure_boot == 'true') {
-    if ($am_i_the_first == 'false') {
-      $search_linux .= " and ";
-    }
-    $search_linux .= "l_secure_boot = true";
-    $am_i_the_first = 'false';
-    $fulfilled[$secure_boot] = 'true';
-  }else if($secure_boot == "false") {
-    $fulfilled[$secure_boot] = 'true';
-  }
-  if ($priority > 7 && ($packetmanager == 0 || $packetmanager == 1 || $packetmanager == 2)) {
-    if ($am_i_the_first == 'false') {
-      $search_linux .= " and ";
-    }
-    $search_linux .= "l_packetmanager = " . $packetmanager;
-    $am_i_the_first = 'false';
-    $fulfilled[$packetmanager] = 'true';
-  }
-  if ($priority > 6 && ($quelloffen == 'true' || $quelloffen == 'false')) {
-    if ($am_i_the_first == 'false') {
-      $search_linux .= " and ";
-    }
-    $search_linux .= "l_quelloffen = " . $quelloffen;
-    $am_i_the_first = 'false';
-    $fulfilled[$quelloffen] = 'true';
+    $desktop_respected = "true";
   }
   if ($am_i_the_first == 'true') {
     $search_linux = "select l_name from Linux;";
-  } 
-  clearStoredResults();  
-  $linuxe = array();  
+  }
+  do {
+    if ($res = $conn->store_result()) {
+      $res->free();
+    }
+  } while ($conn->more_results() && $conn->next_result());
+  //echo $search_linux;
   $result = $conn->query($search_linux);
   if ($result->num_rows > 0) { //wenn irgendwas zurückgeliefert wird
 
@@ -219,29 +115,116 @@ while ($priority > 0) {
       if (in_array($curr_linux, $linuxe)) {
       } else {
 
-        $linuxe[] = array($curr_linux, $priority);
+        $linuxe[] = $curr_linux;
         $insert_nutzer_linux = "INSERT INTO Nutzer_Linux (n_id, l_name) VALUES ($curr_id, '$curr_linux');";
-        
+
         if ($conn->query($insert_nutzer_linux) === TRUE) {
-          
         } else {
-          echo "Error: " . $insert_nutzer_linux . "<br>" . $conn->error;
+          //echo "Error: " . $insert_nutzer_linux . "<br>" . $conn->error;
         }
       }
     }
-    /*if(count($linuxe) > 3){
-     $priority = 0;
-     }else{
-     $priority--;
-     }*/
     $priority = 0;
   } else {
-    $fulfilled = array($erfahrungsgrad => "false",$hw_anforderungen => "false",$konfigurierbarkeit=> "false",$aktualisierungen => "false", $packetmanager=>"false",$quelloffen=>"false",$secure_boot=>"false",$desktop_selected =>"false");
-
+    $desktop_respected = "false";
+    for ($i = 0; $i < count($fragen); $i++) {
+      $fragen[$i]->reset_used();
+    }
     $priority--;
   }
 }
 $conn->close();
+
+class Node
+{
+  public $sql_search = "";
+  public $sql_search_end = "";
+  public $curr_val = "";
+  public $valid_val = array();
+  public $output = "";
+  public $prio = 0;
+  public $used = 'false';
+
+  function __construct($value, $new_output, $new_sql_search, $new_sql_search_end, $new_valid_val, $new_priority)
+  {
+    $this->output = $new_output;
+    $this->sql_search = $new_sql_search;
+    $this->sql_search_end = $new_sql_search_end;
+    $this->valid_val = $new_valid_val;
+    $this->prio = $new_priority;
+    $this->curr_val = $this->testInput($value);
+  }
+  function testInput($data)
+  {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    if (in_array($data, $this->valid_val)) {
+      return $data;
+    } else {
+      return 'null';
+    }
+  }
+
+  function get_select($curr_prio, $is_First)
+  {
+    if ($this->curr_val == 'null' || $this->prio > $curr_prio) {
+      $this->used = 'false';
+      return "";
+    } else {
+      $erg = "";
+      if ($is_First == 'false') {
+        $erg = " and ";
+      }
+      if ($this->output == 'Erfahrungsgrad') {
+        if ($this->curr_val == 0) {
+          $erg .= "l_erfahrungsgrad = 0";
+        } else if ($this->curr_val == 1) {
+          $erg .= "l_erfahrungsgrad in (0, 1)";
+        } else if ($this->curr_val == 2) {
+          $erg .= "l_erfahrungsgrad in (0, 1, 2)";
+        } else {
+        }
+      } else if ($this->output == "Unterstützung von Secure Boot") {
+        if ($this->curr_val == "false") {
+          $erg = "";
+        } else {
+          $erg .= $this->sql_search . "true ";
+        }
+      } else {
+        $erg .= $this->sql_search;
+        $erg .= $this->curr_val;
+        $erg .= $this->sql_search_end;
+      }
+      $this->used = 'true';
+      return $erg;
+    }
+  }
+  function reset_used()
+  {
+    $this->used = 'false';
+    //echo $this->used;
+  }
+  function display()
+  {
+    if ($this->curr_val == 'null') {
+      return "-1";
+    } else if ($this->used == 'false') {
+      return "-2";
+    } else {
+      return $this->output;
+    }
+  }
+
+  function getVal()
+  {
+    return $this->curr_val;
+  }
+  function getOutput()
+  {
+    return $this->output;
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -264,95 +247,29 @@ $conn->close();
 
   <body>
     <?php
-    $values = array();
-
-    if ($erfahrungsgrad == 0 || $erfahrungsgrad == 1 || $erfahrungsgrad == 2) {
-      if($fulfilled[$erfahrungsgrad] == "false"){
-        $values[] = "-2";
-      }else{
-      $values[] = "Erfahrungsgrad (ggf. auch für unerfahrenere Nutzer geeigent)";}
-    } else {
-      $values[] = "-1";
-    }
-    if ($hw_anforderungen == 0 || $hw_anforderungen == 1 || $hw_anforderungen == 2) {
-      if($fulfilled[$hw_anforderungen] == "false"){
-        $values[] = "-2";
-      }else{
-      $values[] = "passt zur Hardware";
-      }
-    } else {
-      $values[] = "-1";
-    }
-    if ($aktualisierungen == 0 || $aktualisierungen == 1 || $aktualisierungen == 2) {
-      if($fulfilled[$aktualisierungen] == "false"){
-        $values[] = "-2";
-      }else{
-      $values[] = "Update Rythmus";}
-    } else {
-      $values[] = "-1";
-    }
     if ($desktop_selected == 'true') {
-      if($fulfilled[$desktop_selected] == "false"){
+      if ($desktop_respected == "false") {
         $values[] = "-2";
-      }else{
-      $values[] = "Unterstützung min. eines  Desktops";}
-    }
-    if ($konfigurierbarkeit == 0 || $konfigurierbarkeit == 1) {
-      if($fulfilled[$konfigurierbarkeit] == "false"){
-        $values[] = "-2";
-      }else{
-      $values[] = "Konfigurierbarkeit bei der Installation";}
-    } else {
-      $values[] = "-1";
-    }
-    if ($quelloffen == 'true' || $quelloffen == 'false') {
-      if($fulfilled[$quelloffen] == "false"){
-        $values[] = "-2";
-      }else{
-      if ($quelloffen == "true") {
-        $values = "ausschlieslich von quelloffene Treiber";
       } else {
-        $values = "Integration von proprietären Treibern";
+        $values[] = "Unterstützung min. eines  Desktops";
       }
     }
-    } else {
-      $values[] = "-1";
-    }
-    if ($packetmanager == 0 || $packetmanager == 1 || $packetmanager == 2) {
-      if($fulfilled[$packetmanager] == "false"){
-        $values[] = "-1";
-      }else{
-      $values[] = "Packetmanager";}
-    } else {
-      $values[] = "-1";
-    }
-    if ($secure_boot == 'true' || $secure_boot == "false") {
-      if($fulfilled[$secure_boot] == "false"){
-        $values[] = "-1";
-      }else{
-      $values[] = "Unterstützung von Secure Boot";}
-    } else {
-      $values[] = "-1";
-    }
+
     $links = array(
-      "Linux Mint"=>"https://linuxmint.com/", 
-      "Ubuntu"=>"https://ubuntu.com/", 
-      "Debian"=>"https://www.debian.org/", 
-      "Manjaro"=>"https://manjaro.org/", 
-      "Fedora"=>"https://getfedora.org/de/", 
-      "elementary OS"=>"https://elementary.io/de/", 
-      "MX Linux"=>"https://mxlinux.org/", 
-      "Arch Linux"=>"https://archlinux.org/",
-      "openSUSE Tumbleweed"=>"https://get.opensuse.org/tumbleweed/");
+      "Linux Mint" => "https://linuxmint.com/",
+      "Ubuntu" => "https://ubuntu.com/",
+      "Debian" => "https://www.debian.org/",
+      "Manjaro" => "https://manjaro.org/",
+      "Fedora" => "https://getfedora.org/de/",
+      "elementary OS" => "https://elementary.io/de/",
+      "MX Linux" => "https://mxlinux.org/",
+      "Arch Linux" => "https://archlinux.org/",
+      "openSUSE Tumbleweed" => "https://get.opensuse.org/tumbleweed/"
+    );
     if ((count($linuxe) > 1) && (count($linuxe) < 5)) {
       echo '<div class="grid-container" style="grid-template-columns: repeat(' . count($linuxe) . ', 1fr);">';
     } else if (count($linuxe) > 4) {
-      if ((count($linuxe) % 2) == 0) {
-        echo '<div class="grid-container" style="grid-template-columns: repeat(' . count($linuxe) / 2 . ', 1fr);">';
-      } else {
-        $rows_grid = count($linuxe) - 1;
-        echo '<div class="grid-container" style="grid-template-columns: repeat(' . $rows_grid / 2 . ', 1fr);">';
-      }
+      echo '<div class="grid-container" style="grid-template-columns: repeat(' . round(count($linuxe) / 2) . ', 1fr);">';
     } else {
       echo '<div class="single_distro_container"> ';
     }
@@ -360,23 +277,22 @@ $conn->close();
       echo '<div class="oneCard">
                   <div class="oneCard_inner">
                     <div class="front">';
-      echo '<h4>' . $linuxe[$j][0] . '</h4>';
-      echo '<img class="logo" src="Bilder/' . $linuxe[$j][0] . '.png"></img>
+      echo '<h4>' . $linuxe[$j] . '</h4>';
+      echo '<img class="logo" src="Bilder/' . $linuxe[$j] . '.png"></img>
                     </div>
                     <div class="back">
-                      <h3>' . $linuxe[$j][0] . '</h3>
+                      <h3>' . $linuxe[$j] . '</h3>
                     <table>';
-      for ($i = 0; $i < count($values); $i++) {
-        if ($values[$i] == "-1") {
+      for ($i = 0; $i < count($fragen); $i++) {
+        if ($fragen[$i]->display() == "-1") {
+        } else if ($fragen[$i]->display() == "-2") {
+          echo '<tr> <td><img class="OKNOK" src="Bilder/NOK.png"></img></td> <td>' . $fragen[$i]->getOutput() . '</td> </tr>';
         } else {
-          echo '<tr> <td><img class="OKNOK" src="Bilder/';
-          echo ($values[$i] == "-2") ? 'NOK.png' : 'OK.png';
-          //echo ($fulfilled[$i+1] == 'false') ? 'OK.png' : 'NOK.png';
-          echo '"></img></td> <td>' . $values[$i] . '</td> </tr>';
+          echo '<tr> <td><img class="OKNOK" src="Bilder/OK.png"></img></td> <td>' . $fragen[$i]->getOutput() . '</td> </tr>';
         }
       }
       echo '    </table>';
-      echo '<a href="'.$links[$linuxe[$j][0]].'"> >>Zur Website </a>
+      echo '<a href="' . $links[$linuxe[$j]] . '"> >>Zur Website </a>
                     </div>
                   </div>
                 </div>';
@@ -384,6 +300,7 @@ $conn->close();
 
     echo "</div>";
     ?>
+    <a class="button" href="auswertung.php?fragen=hw_anforderungen" >Zur Auswertung</a>
   </body>
   <footer>
     <p>© Sabino, Schreckenast</p>
@@ -414,24 +331,25 @@ $conn->close();
       position: absolute;
       width: 90%;
       height: 100%;
-      left:5%;
+      left: 5%;
+      background-color: var(--bc);
       -webkit-backface-visibility: hidden;
       /* Safari */
       backface-visibility: hidden;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      
     }
 
     .back {
+
       background-color: var(--bc);
       transform: rotateY(180deg);
-      height: fit-content;
     }
 
     .front {
-      top:10%;
       background-color: var(--bc);
       text-align: center;
       justify-content: center;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
     .OKNOK {
@@ -466,15 +384,28 @@ $conn->close();
       left: 20%;
       position: absolute;
     }
+    .button{
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%,0%);
+    width: 7%;
+    height:2.5%;
+    color: var(--tc);
+    animation: changecolor 50s infinite;
+    border:2px solid var(--tc);
+  }
 
     h4 {
       padding: 5%;
       text-align: left;
     }
-    table{
+
+    table {
       padding: 5%;
     }
-    a{
+
+    a {
       color: var(--tc);
     }
   </style>
