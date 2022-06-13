@@ -74,11 +74,11 @@ create or replace table WhatstherightLinuxforme.Nutzer (
     foreign key(n_hw_anforderungen) REFERENCES WhatstherightLinuxforme.HW_Anforderungen(hw_id),
     foreign key(n_aktualisierungen) REFERENCES WhatstherightLinuxforme.Aktualitaet(ak_id)
 );
-INSERT INTO Nutzer (n_id, n_name, n_hw_anforderungen, n_erfahrungsgrad, n_konfigurierbarkeit, n_aktualisierungen, n_secure_boot, n_packetmanager, n_quelloffen) 
+INSERT INTO WhatstherightLinuxforme.Nutzer (n_id, n_name, n_hw_anforderungen, n_erfahrungsgrad, n_konfigurierbarkeit, n_aktualisierungen, n_secure_boot, n_packetmanager, n_quelloffen) 
 VALUES (1, 'Tick', null, 0, 1 ,2 , null,null , null );
-INSERT INTO Nutzer (n_id, n_name, n_hw_anforderungen, n_erfahrungsgrad, n_konfigurierbarkeit, n_aktualisierungen, n_secure_boot, n_packetmanager, n_quelloffen) 
+INSERT INTO WhatstherightLinuxforme.Nutzer (n_id, n_name, n_hw_anforderungen, n_erfahrungsgrad, n_konfigurierbarkeit, n_aktualisierungen, n_secure_boot, n_packetmanager, n_quelloffen) 
 VALUES (2, 'Trick', 2, 2, 0 ,0 , null,2 , null );
-INSERT INTO Nutzer (n_id, n_name, n_hw_anforderungen, n_erfahrungsgrad, n_konfigurierbarkeit, n_aktualisierungen, n_secure_boot, n_packetmanager, n_quelloffen) 
+INSERT INTO WhatstherightLinuxforme.Nutzer (n_id, n_name, n_hw_anforderungen, n_erfahrungsgrad, n_konfigurierbarkeit, n_aktualisierungen, n_secure_boot, n_packetmanager, n_quelloffen) 
 VALUES (3, 'Tack', 0, 1, null ,null , null,null , null );
 
 create or replace table WhatstherightLinuxforme.Nutzer_Desktop(
@@ -89,19 +89,17 @@ create or replace table WhatstherightLinuxforme.Nutzer_Desktop(
     foreign key(d_name) REFERENCES WhatstherightLinuxforme.Desktop(d_name),
     PRIMARY KEY (nd_id)
 );
-INSERT INTO Nutzer_Desktop (n_id, d_name) VALUES (1, 'Cinnamon');
-INSERT INTO Nutzer_Desktop (n_id, d_name) VALUES (1, 'KDE Plasma');
-INSERT INTO Nutzer_Desktop (n_id, d_name) VALUES (1, 'LxQt');
-INSERT INTO Nutzer_Desktop (n_id, d_name) VALUES (1, 'MATE');
-INSERT INTO Nutzer_Desktop (n_id, d_name) VALUES (2, 'Cinnamon');
-INSERT INTO Nutzer_Desktop (n_id, d_name) VALUES (2, 'KDE Plasma');
-INSERT INTO Nutzer_Desktop (n_id, d_name) VALUES (2, 'LxQt');
-INSERT INTO Nutzer_Desktop (n_id, d_name) VALUES (2, 'MATE');
-INSERT INTO Nutzer_Desktop (n_id, d_name) VALUES (2, 'Gnome');
-INSERT INTO Nutzer_Desktop (n_id, d_name) VALUES (2, 'Pantheon');
-INSERT INTO Nutzer_Desktop (n_id, d_name) VALUES (2, 'Xfce');
-
-What is the best Linux Distribution for me?
+INSERT INTO WhatstherightLinuxforme.Nutzer_Desktop (n_id, d_name) VALUES (1, 'Cinnamon');
+INSERT INTO WhatstherightLinuxforme.Nutzer_Desktop (n_id, d_name) VALUES (1, 'KDE Plasma');
+INSERT INTO WhatstherightLinuxforme.Nutzer_Desktop (n_id, d_name) VALUES (1, 'LxQt');
+INSERT INTO WhatstherightLinuxforme.Nutzer_Desktop (n_id, d_name) VALUES (1, 'MATE');
+INSERT INTO WhatstherightLinuxforme.Nutzer_Desktop (n_id, d_name) VALUES (2, 'Cinnamon');
+INSERT INTO WhatstherightLinuxforme.Nutzer_Desktop (n_id, d_name) VALUES (2, 'KDE Plasma');
+INSERT INTO WhatstherightLinuxforme.Nutzer_Desktop (n_id, d_name) VALUES (2, 'LxQt');
+INSERT INTO WhatstherightLinuxforme.Nutzer_Desktop (n_id, d_name) VALUES (2, 'MATE');
+INSERT INTO WhatstherightLinuxforme.Nutzer_Desktop (n_id, d_name) VALUES (2, 'Gnome');
+INSERT INTO WhatstherightLinuxforme.Nutzer_Desktop (n_id, d_name) VALUES (2, 'Pantheon');
+INSERT INTO WhatstherightLinuxforme.Nutzer_Desktop (n_id, d_name) VALUES (2, 'Xfce');
 
 create or replace table WhatstherightLinuxforme.Linux_Desktop(
     nd_id int not null auto_increment,
@@ -147,11 +145,11 @@ create or replace table WhatstherightLinuxforme.Nutzer_Linux(
     foreign key(l_name) REFERENCES WhatstherightLinuxforme.Linux(l_name),
     PRIMARY KEY (nl_id)
 );
-INSERT INTO Nutzer_Linux (n_id, l_name) VALUES (1, 'Linux Mint');
-INSERT INTO Nutzer_Linux (n_id, l_name) VALUES (2, 'openSUSE Tumbleweed');
-INSERT INTO Nutzer_Linux (n_id, l_name) VALUES (2, 'Arch Linux');
-INSERT INTO Nutzer_Linux (n_id, l_name) VALUES (3, 'openSUSE Tumbleweed');
-INSERT INTO Nutzer_Linux (n_id, l_name) VALUES (3, 'Debian');
+INSERT INTO WhatstherightLinuxforme.Nutzer_Linux (n_id, l_name) VALUES (1, 'Linux Mint');
+INSERT INTO WhatstherightLinuxforme.Nutzer_Linux (n_id, l_name) VALUES (2, 'openSUSE Tumbleweed');
+INSERT INTO WhatstherightLinuxforme.Nutzer_Linux (n_id, l_name) VALUES (2, 'Arch Linux');
+INSERT INTO WhatstherightLinuxforme.Nutzer_Linux (n_id, l_name) VALUES (3, 'openSUSE Tumbleweed');
+INSERT INTO WhatstherightLinuxforme.Nutzer_Linux (n_id, l_name) VALUES (3, 'Debian');
 
 create or replace table WhatstherightLinuxforme.Linux_HW_Anforderungen(
     nh_id int not null auto_increment,
