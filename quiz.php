@@ -294,13 +294,6 @@ function test_input($data) {
   img{
     width:90%;
   }
-  /*img:hover{
-    transform: translate(-50%,-50%);
-    position:absolute;
-    top:50%;
-    left:50%;
-    width:150%;
-  }*/
   .h3{
     padding:10%;
     font-size:larger;
@@ -409,4 +402,3 @@ function test_input($data) {
 </script>
 </body>
 </html>
-

@@ -46,30 +46,12 @@ a{
     position: absolute;
     transform: translate(-50%,-50%);
 }
-/*#bild1{
-    top: 80%;
-    left:50%;
-    position: absolute;
-    transform: translate(-50%,-50%);
-}*/
 aside{
     position:absolute;
     top:10%;
     width:20%; 
     left:80%;   
     height:80%;
-}
-#header{
-    position: absolute;
-    justify-content: center;
-    text-align: center;
-    right:50%;
-    transform: translate(-50%,0%);
-}
-#dark{
-    position: absolute;
-    right:1%;
-    animation: changecolor 50s infinite;
 }
 #enter{
     align-items: center;
