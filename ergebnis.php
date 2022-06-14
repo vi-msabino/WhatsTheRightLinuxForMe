@@ -3,9 +3,12 @@ session_start();
 //error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
 
 //ini_set('display_errors', '1');
-$servername = "localhost";
-$username = "user";
-$password = "password";
+$config = parse_ini_file("config.ini",true);
+
+$database = $config["database"];
+$servername = $database["servername"];
+$username = $database["username"];
+$password = $database["password"];
 $dbname = "WhatstherightLinuxforme";
 
 // DB Verbindung herstellen
@@ -34,11 +37,10 @@ $tre_val = array('0', '1', '2');
 $hw_anforderungen = new Node($_GET["hw_anforderungen"], "passt zur Hardware", "l_name in (select l_name from Linux_HW_Anforderungen where hw_id = ", ")", $tre_val, 2);
 $erfahrungsgrad = new Node($_GET["erfahrungsgrad"], "Erfahrungsgrad", "l_erfahrungsgrad in (", ")", $tre_val, 1);
 $konfigurierbarkeit = new Node($_GET["konfigurierbarkeit"], "Konfigurierbarkeit bei der Installation", "l_konfigurierbarkeit = ", "", array('0', '1'), 5);
-$aktualisierungen = new Node($_GET["aktualisierungen"], "Update Rythmus", "l_name in (select l_name from Linux_Aktualitaet where ak_id = ", ")", $tre_val, 3);
+$aktualisierungen = new Node($_GET["aktualisierungen"], "Updatezyklus", "l_name in (select l_name from Linux_Aktualitaet where ak_id = ", ")", $tre_val, 3);
 $secure_boot = new Node($_GET["secure_boot"], "Unterstützung von Secure Boot", "l_secure_boot = ", "", array('true', 'false'), 8);
 $packetmanager = new Node($_GET["packetmanager"], "Packetmanager", "l_packetmanager = ", "", $tre_val, 7);
 $quelloffen = new Node($_GET["quelloffen"], "quelloffene vs. proprietäre Treiber", "l_quelloffen = ", "", array('true', 'false'), 6);
-//$desktop = new Node($_GET["quelloffen"], "quelloffene vs. proprietäre Treiber", "l_name in (select l_name from Linux_HW_Anforderungen where hw_id = ", ")", $tre_val, 2);
 $fragen = array($hw_anforderungen, $erfahrungsgrad, $konfigurierbarkeit, $aktualisierungen, $secure_boot, $packetmanager, $quelloffen);
 //insert in die Tabelle Nutzer
 $basic_insert = "INSERT INTO Nutzer (n_id, n_name, n_hw_anforderungen, n_erfahrungsgrad, n_konfigurierbarkeit, n_aktualisierungen, n_secure_boot, n_packetmanager, n_quelloffen)
@@ -61,18 +63,13 @@ while (isset($_GET["desktop"][$i])) {
     $insert_n_desk .= "INSERT INTO Nutzer_Desktop (n_id, d_name) VALUES ($curr_id, '$curr_desk');";
 
     $desktop_selected = 'true';
-  } else {
-    //echo "unbekannter Desktop";
-  }
+  } 
 }
-//echo $insert_n_desk;
 if (!($insert_n_desk == "")) {
-  if (mysqli_multi_query($conn, $insert_n_desk)) {
-    //echo "Desktop Auswahl gespeichert <br>";  }
-  } else {
-    //echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-  }
+  mysqli_multi_query($conn, $insert_n_desk);
 }
+
+//select Staement zum Nutzer suchen
 $desktop_respected = "false";
 $priority = 9;
 $linuxe = array();
@@ -81,7 +78,6 @@ while ($priority > 0) {
   $search_linux = "select l_name from Linux where ";
   for ($i = 0; $i < count($fragen); $i++) {
     $select = $fragen[$i]->get_select($priority, $am_i_the_first);
-    //echo $select."x";
     if ($select == "") {
     } else {
       $search_linux .= $select;
@@ -105,7 +101,7 @@ while ($priority > 0) {
       $res->free();
     }
   } while ($conn->more_results() && $conn->next_result());
-  //echo $search_linux;
+
   $result = $conn->query($search_linux);
   if ($result->num_rows > 0) { //wenn irgendwas zurückgeliefert wird
 
@@ -118,10 +114,8 @@ while ($priority > 0) {
         $linuxe[] = $curr_linux;
         $insert_nutzer_linux = "INSERT INTO Nutzer_Linux (n_id, l_name) VALUES ($curr_id, '$curr_linux');";
 
-        if ($conn->query($insert_nutzer_linux) === TRUE) {
-        } else {
-          //echo "Error: " . $insert_nutzer_linux . "<br>" . $conn->error;
-        }
+        $conn->query($insert_nutzer_linux);
+        
       }
     }
     $priority = 0;
@@ -203,7 +197,6 @@ class Node
   function reset_used()
   {
     $this->used = 'false';
-    //echo $this->used;
   }
   function display()
   {
@@ -233,16 +226,14 @@ class Node
   <meta charset="utf-8">
   <meta name="What is the best Linux Distribution for me?">
   <title>Welcome to our Distro-Chooser</title>
-  <link rel="shortcut icon" href="favicon.ico" title="ico" type="image/x-icon">
   <link rel="stylesheet" href="general.css">
-  <!--link rel="stylesheet" href="style.css"-->
   <script type="text/javascript" src="general.js"></script>
 </head>
 
-<body class="COLOR">
+<body class="COLOR" >
   <header>
-    <h1 id="header">What is the best Linux Distribution for me?</h1>
-    <button id="dark" onclick="onClick('button')"><img src="dark-white.png" type="img/png" title="Umstellen auf Dark/White-Mode" height="30px"></img></button>
+    <h1 id="header">Ergebnis</h1>
+    <button id="dark" onclick="onClick('button')"><img src="Bilder/dark-white.png" type="img/png" title="Umstellen auf Dark/White-Mode" height="30px"></img></button>
   </header>
 
   <body>
@@ -300,7 +291,7 @@ class Node
 
     echo "</div>";
     ?>
-    <a class="button" href="auswertung.php?fragen=hw_anforderungen" >Zur Auswertung</a>
+    <a class="button" href="auswertung.php?fragen=hw_anforderungen">Zur Auswertung</a>
   </body>
   <footer>
     <p>© Sabino, Schreckenast</p>
@@ -310,6 +301,9 @@ class Node
       background-color: transparent;
       width: 80%;
       height: 80%;
+      left: 10%;
+      top: 10%;
+      position: relative;
       perspective: 1000px;
     }
 
@@ -336,7 +330,7 @@ class Node
       -webkit-backface-visibility: hidden;
       /* Safari */
       backface-visibility: hidden;
-      
+
     }
 
     .back {
@@ -357,7 +351,6 @@ class Node
     }
 
     .logo {
-      /*width:50%;*/
       top: 50%;
       left: 50%;
       height: 55%;
@@ -378,23 +371,25 @@ class Node
     }
 
     .single_distro_container {
-      top: 16%;
-      width: 60%;
-      height: 60%;
-      left: 20%;
+      top: 20%;
+      width: 50%;
+      height: 50%;
+      left: 50%;
+      transform: translate(-50%, 0%);
       position: absolute;
     }
-    .button{
-    position: absolute;
-    top: 80%;
-    left: 50%;
-    transform: translate(-50%,0%);
-    width: 7%;
-    height:2.5%;
-    color: var(--tc);
-    animation: changecolor 50s infinite;
-    border:2px solid var(--tc);
-  }
+
+    .button {
+      position: absolute;
+      top: 80%;
+      left: 50%;
+      transform: translate(-50%, 0%);
+      width: 7%;
+      height: 2.5%;
+      color: var(--tc);
+      animation: changecolor 50s infinite;
+      border: 2px solid var(--tc);
+    }
 
     h4 {
       padding: 5%;

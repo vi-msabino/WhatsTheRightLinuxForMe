@@ -1,11 +1,13 @@
 <?php
-//error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
+session_start();
+$config = parse_ini_file("config.ini",true);
 
-//ini_set('display_errors', '1');
-$servername = "localhost";
-$username = "user";
-$password = "password";
+$database = $config["database"];
+$servername = $database["servername"];
+$username = $database["username"];
+$password = $database["password"];
 $dbname = "WhatstherightLinuxforme";
+
 
 // DB Verbindung herstellen
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -33,15 +35,14 @@ $linuxe = array("Linux Mint", "Ubuntu", "MX Linux", "elementary OS", "Debian", "
     <meta charset="utf-8">
     <meta name="Was ist die beste Linux Distribution für mich?">
     <title>Distro-Chooser</title>
-    <link rel="shortcut icon" href="favicon.ico" title="ico" type="image/x-icon">
     <link rel="stylesheet" href="general.css">
     <script type="text/javascript" src="general.js"></script>
 </head>
 
-<body class="COLOR">
+<body class="COLOR" >
     <header>
-        <h1 id="header">Was ist die beste Linux Distribution für mich?</h1>
-        <button id="dark" onclick="onClick('button')"><img src="dark-white.png" type="img/png" title="Umstellen auf Dark/White-Mode" height="30px"></img></button>
+        <h1 id="header">Auswertung</h1>
+        <button id="dark" onclick="onClick('button')"><img src="Bilder/dark-white.png" type="img/png" title="Umstellen auf Dark/White-Mode" height="30px"></img></button>
     </header>
     <table class="linuxe">
     
@@ -66,13 +67,13 @@ $linuxe = array("Linux Mint", "Ubuntu", "MX Linux", "elementary OS", "Debian", "
     </table>
     <div class="second_box">
         <select name="fragen" id="fragen" form="fragen_auswaehlen">
-            <option value="hw_anforderungen">Hareware Anforderungen</option>
+            <option value="hw_anforderungen">Harewareanforderungen</option>
             <option value="erfahrungsgrad">Erfahrungsgrad</option>
             <option value="konfigurierbarkeit">Konfigurierbarkeit</option>
-            <option value="aktualisierungen">Update Zyklus</option>
+            <option value="aktualisierungen">Updatezyklus</option>
             <option value="secure_boot">Secure Boot</option>
             <option value="packetmanager">Packetmanager</option>
-            <option value="quelloffen">quelloffene Treiber</option>
+            <option value="quelloffen">quelloffene/proprietäre Treiber</option>
             <option value="desktop">Desktop</option>
         </select>
         <form id="fragen_auswaehlen" method="get"><input type="submit" class="button" id="submit_Form_Button" value="Statistik zeigen" /></form>
@@ -104,9 +105,9 @@ $linuxe = array("Linux Mint", "Ubuntu", "MX Linux", "elementary OS", "Debian", "
                     "hw_anforderungen" => array("Uralt PCs", "Schwache Hardware", "Brandaktuelle Hardware"),
                     "erfahrungsgrad" => array("Anfänger", "Fortgeschritten", "Profi"),
                     "konfigurierbarkeit" => array("wenig Einstellungen", "viele Einstellungen"),
-                    "aktualisierungen" => array("Rolling Release", "jährlich Updates", "Long time support"),
+                    "aktualisierungen" => array("Rolling Release", "jährliche Updates", "Long-term Support"),
                     "secure_boot" => array("wird unterstützt", "wird nicht unterstützt"),
-                    "packetmanager" => array("APT + DEB ", "RPM", "Packman"),
+                    "packetmanager" => array("APT + DEB", "RPM", "Packman"),
                     "quelloffen" => array("quelloffene Treiber", "proprietäre Treiber"),
                     "desktop" => array("Cinnamon", "Gnome", "KDE Plasma", "LxQt", "MATE", "Pantheon", "Xfce")
                 );
@@ -178,7 +179,7 @@ $linuxe = array("Linux Mint", "Ubuntu", "MX Linux", "elementary OS", "Debian", "
                 ?>
             </table>
         </div>
-        <p> <i> Hinweis: die Prozentangaben erreichen nicht immer 100%, <br> da manche Nutzer nicht alle Fragen beantworten <br> oder manche Distributionen mehrere Antwortmöglichkeiten unterstützen<i></p>
+        <p> <i> Hinweis: die Prozentangaben ergeben addiert nicht zwangsläufig 100%, <br> da manche Nutzer nicht alle Fragen beantworten <br> oder manche Distributionen mehrere Antwortmöglichkeiten unterstützen<i></p>
     </div>
     <footer>
         <p>© Sabino, Schreckenast</p>
@@ -207,7 +208,13 @@ $linuxe = array("Linux Mint", "Ubuntu", "MX Linux", "elementary OS", "Debian", "
             animation: changecolor 50s infinite;
             border: 2px solid var(--tc);
             left: 50%;
+            top:0%;
             color: var(--tc);
+            position: relative;
+        }
+        #fragen_auswaehlen{
+            top:0%;
+            left:40%;
             position: relative;
         }
 

@@ -1,4 +1,5 @@
 create database WhatstherightLinuxforme;
+
 create or replace table WhatstherightLinuxforme.Linux (
 	l_name varchar(50) NOT NULL,
     l_erfahrungsgrad int,

@@ -1,6 +1,0 @@
-andere Distro Chooser
-1. https://distrochooser.de/en/
-2. https://distrochooser.snehit.dev
-3. https://zkldi.xyz/playground/distro/
-4. https://librehunt.org/
-5. https://the.linuxquiz.org/

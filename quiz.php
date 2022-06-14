@@ -1,5 +1,4 @@
 <?php
-// Start the session
 session_start();
 ?>
 <!DOCTYPE html>
@@ -11,11 +10,9 @@ session_start();
     <link rel="stylesheet" href="general.css">
     <script type="text/javascript" src="general.js"></script>
 </head>
-<body>
+<body class="COLOR" >
 <?php
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
 
-ini_set('display_errors', '1');
 $_SESSION["name"] = test_input($_GET["vorname"]);
 function test_input($data) {
     $data = trim($data);
@@ -25,8 +22,8 @@ function test_input($data) {
   }
 ?>
     <header> 
-        <h1 id="header">Was ist die beste Linux Distribution für mich?</h1> 
-        <button id="dark" onclick="onClick('button')"><img src="dark-white.png" type="img/png" title="Umstellen auf Dark/White-Mode" height="30px"></img></button>
+        <h1 id="header">Quiz</h1> 
+        <button id="dark" onclick="onClick('button')"><img src="Bilder/dark-white.png" type="img/png" title="Umstellen auf Dark/White-Mode" height="30px"></img></button>
     </header>
     <main>
     <form method="get" action="ergebnis.php">
@@ -34,18 +31,19 @@ function test_input($data) {
       <h3>Wie viel Erfahrung haben Sie im Umgang mit Computern?</h3>
       <div class="Antworten">
         <input id="erfahrungsgrad_0" type="radio" name="erfahrungsgrad" value="0">
-        <label for="erfahrungsgrad_0">Ich brauche Hilfe bei den vielen Problemen</label><br>
+        <label for="erfahrungsgrad_0">Ich brauche Hilfe bei vielen Problemen</label><br>
         <input id="erfahrungsgrad_1" type="radio" name="erfahrungsgrad" value="1">
         <label for="erfahrungsgrad_1">Ich kann kleinere Schwierigkeiten selbst bewältigen</label><br>
         <input id="erfahrungsgrad_2" type="radio" name="erfahrungsgrad" value="2">
         <label for="erfahrungsgrad_2">Ich komme mit Problemen gut klar</label><br>
+        
       </div>
     </div>
     <div class="Frage" id="hw_anforderungen">
-        <h3>Auf welcher Hardware soll das Linux ausgeführt werden</h3>
+        <h3>Auf welcher Hardware soll das Linux ausgeführt werden?</h3>
       <div class="Antworten">
         <input id="hw_anforderungen_0" type="radio" name="hw_anforderungen" value="0">
-        <label for="hw_anforderungen_0">Sehr alte Hardware mit 32 bit (Das ist bei Hardware, die jünger wie 5 Jahre ist, meist nicht der Fall)</label><br>
+        <label for="hw_anforderungen_0">Sehr alte Hardware mit 32 Bit <i>(Das ist bei Hardware, die jünger wie 5 Jahre ist, meist nicht der Fall)</i></label><br>
         <input id="hw_anforderungen_1" type="radio" name="hw_anforderungen" value="1">
         <label for="hw_anforderungen_1">Schwache Hardware</label><br>
         <input id="hw_anforderungen_2" type="radio" name="hw_anforderungen" value="2">
@@ -55,18 +53,18 @@ function test_input($data) {
       </div>
     </div>
     <div class="Frage" id="konfigurierbarkeit">    
-        <h3>Ist Ihnen eine hohe Konfigurierbarkeit bei Start wichtig?</h3>
+        <h3>Ist Ihnen eine hohe Konfigurierbarkeit bei der Installation wichtig?</h3>
       <div class="Antworten">
         <input id="konfigurierbarkeit_0" type="radio" name="konfigurierbarkeit" value="1">
-        <label for="konfigurierbarkeit_0">Ja, ich möchte sehr viel beim ersten Startvorgang einstellen</label><br>
+        <label for="konfigurierbarkeit_0">Viele Einstellungen</label><br>
         <input id="konfigurierbarkeit_1" type="radio" name="konfigurierbarkeit" value="0">
-        <label for="konfigurierbarkeit_1">Nein, ich möchte mich auf Voreinstellungen verlassen</label><br>
+        <label for="konfigurierbarkeit_1">Wenige Einstellungen</label><br>
         <input id="konfigurierbarkeit_-1" type="radio" name="konfigurierbarkeit" value="-1">
         <label for="konfigurierbarkeit_-1">Ich habe keine Präferenz</label><br>
       </div>
     </div>
     <div class="Frage" id="Aktualisierungen">    
-        <h3>Welchen Update-Rytmus bevorzugen Sie?</h3>
+        <h3>Welchen Update Rhythmus bevorzugen Sie?</h3>
       <div class="Antworten">
         <input id="aktualisierungen_0" type="radio" name="aktualisierungen" value="0">
         <label for="aktualisierungen_0">häufige Updates und neueste Software mit erhöhter Fehleranfälligkeit</label><br>
@@ -79,7 +77,7 @@ function test_input($data) {
       </div>
     </div>
     <div class="Frage" id="WinOderMac">    
-        <h3>Welches Betriebssystem gefällt Ihnen optisch am besten</h3>
+        <h3>Welches Betriebssystem gefällt Ihnen optisch am besten?</h3>
       <div class="Antworten">
         <input id="winmac_true" type="radio" name="winmac" value="true">
         <label for="winmac_true" >Windows</label><br>

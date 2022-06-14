@@ -4,20 +4,19 @@
     <meta charset="utf-8">
     <meta name="Was ist die beste Linux Distribution für mich?">
     <title>Distro-Chooser</title>
-    <link rel="shortcut icon" href="favicon.ico" title="ico" type="image/x-icon">
     <link rel="stylesheet" href="general.css">
     <script type="text/javascript" src="general.js"></script>
 </head>
 <body class="COLOR">
     <header> 
         <h1 id="header">Was ist die beste Linux Distribution für mich?</h1> 
-        <button id="dark" onclick="onClick('button')"><img src="dark-white.png" type="img/png" title="Umstellen auf Dark/White-Mode" height="30px"></img></button>
+        <button id="dark" onclick="onClick('button')"><img src="Bilder/dark-white.png" type="img/png" title="Umstellen auf Dark/White-Mode" height="30px"></img></button>
     </header>
     <form method="GET" action="quiz.php">
         <label id="text">Trage hier deinen Namen ein : </label><br>
         <input type="text" name="vorname" id="textInput" placeholder="Name eingeben"/>
 	    <nav id="enter">Enter drücken um den Namen einzugeben!</nav>
-        <input type="image" src="Tux.svg.png" id="bild"/><br>
+        <input type="image" src="Bilder/Tux.svg.png" id="bild"/><br>
         <p id="bild1">Zum Starten auf das Bild von Tux klicken</p>
     </form>
     <footer>
